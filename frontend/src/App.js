@@ -21,7 +21,7 @@ const App = () => {
             <Route path='/' exact>
               <HomeScreen />
             </Route>
-            <Route path='/invoice/:iid'>
+            <Route path='/invoice/:iid' exact>
               <SingleInvoice />
             </Route>
           </Container>

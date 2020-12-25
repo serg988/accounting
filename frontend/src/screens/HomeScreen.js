@@ -12,7 +12,7 @@ const HomeScreen = () => {
 
   return (
     <div className='table-container'>
-      <h1>Account Assistant</h1>
+      <h1 className='text-center'>Account Assistant</h1>
       <Table bordered hover size='sm'>
         <thead>
           <tr>
