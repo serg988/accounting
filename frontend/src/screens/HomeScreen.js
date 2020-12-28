@@ -12,14 +12,14 @@ const HomeScreen = () => {
 
   return (
     <div className='table-container'>
-      <h1 className='text-center'>Account Assistant</h1>
+      <h2 className='text-center mb-3'>Bartrans Logistics Account Assistant</h2>
       <Table bordered hover size='sm'>
         <thead>
           <tr>
             <th style={{ width: '5%' }}>#</th>
-            <th style={{ width: '10%' }}>Date</th>
-            <th style={{ width: '75%' }}>Customer </th>
-            <th style={{ width: '10%' }}>Amount </th>
+            <th style={{ width: '10%' }}>Дата</th>
+            <th style={{ width: '75%' }}>Клиент </th>
+            <th style={{ width: '10%' }}>Сумма </th>
           </tr>
         </thead>
         <tbody>

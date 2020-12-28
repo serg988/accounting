@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import HomeScreen from './screens/HomeScreen'
 import SingleInvoice from './invoices/SingleInvoice'
+import NewInvoice from './invoices/NewInvoice'
 import {
   BrowserRouter as Router,
   Route,
@@ -23,6 +24,9 @@ const App = () => {
             </Route>
             <Route path='/invoice/:iid' exact>
               <SingleInvoice />
+            </Route>
+            <Route path='/new-invoice' exact>
+              <NewInvoice />
             </Route>
           </Container>
         </main>
