@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import * as yup from 'yup'
-import { Formik, ErrorMessage } from 'formik'
+import { Formik, ErrorMessage, FieldArray } from 'formik'
 import { Form, Col, Button } from 'react-bootstrap'
 import SuccessModal from '../shared/UIElements/SuccessModal'
 import TextError from '../shared/form/TextError'
@@ -35,7 +35,7 @@ const NewInvoice = () => {
         onSubmit={onSubmit}
         validateOnChange={false}
         initialValues={{
-          name: '',
+          customer: '',
           vessel: '',
           voyage: '',
           bl: '',
@@ -47,6 +47,7 @@ const NewInvoice = () => {
               cost: '',
             },
           ],
+          linesNumber: [''],
         }}
       >
         {({
@@ -58,32 +59,34 @@ const NewInvoice = () => {
           touched,
           errors,
         }) => {
-          const addLinesHandler = () => {
-            
-          }
+          const addLinesHandler = () => {}
           console.log(values.lines)
 
           return (
             <Form noValidate onSubmit={handleSubmit}>
-              <Form.Group>
-                <Button className='mt-4 btn-success'>Новый клиент</Button>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Клиент - выбор из списка</Form.Label>
-                <Form.Control
-                  as='select'
-                  type='text'
-                  name='customer'
-                  {...getFieldProps('customer')}
-                  isInvalid={errors.customer && touched.customer}
-                >
-                  <option></option>
-                  {customers.map((customer) => (
-                    <option key={customer}>{customer}</option>
-                  ))}
-                </Form.Control>
-                <ErrorMessage name='customer' component={TextError} />
-              </Form.Group>
+              <Form.Row>
+                <Form.Group as={Col} md='8'>
+                  <Form.Label>Клиент - выбор из списка</Form.Label>
+                  <Form.Control
+                    as='select'
+                    type='text'
+                    name='customer'
+                    {...getFieldProps('customer')}
+                    isInvalid={errors.customer && touched.customer}
+                  >
+                    <option></option>
+                    {customers.map((customer) => (
+                      <option key={customer}>{customer}</option>
+                    ))}
+                  </Form.Control>
+                  <ErrorMessage name='customer' component={TextError} />
+                </Form.Group>
+                <Form.Group>
+                  <Button className='btn-success' style={{ marginTop: '31px' }}>
+                    или - Новый клиент
+                  </Button>
+                </Form.Group>
+              </Form.Row>
 
               <Form.Row>
                 <Form.Group as={Col} md='8'>
@@ -91,7 +94,7 @@ const NewInvoice = () => {
                   <Form.Control
                     type='text'
                     name='vessel'
-                    placeholder='Название судна'
+                    // placeholder='Название судна'
                     {...getFieldProps('vessel')}
                     isInvalid={errors.vessel && touched.vessel}
                   />
@@ -102,7 +105,7 @@ const NewInvoice = () => {
                   <Form.Control
                     type='text'
                     name='voyage'
-                    placeholder='Номер рейса'
+                    // placeholder='Номер рейса'
                     {...getFieldProps('voyage')}
                     isInvalid={errors.voyage && touched.voyage}
                   />
@@ -116,7 +119,7 @@ const NewInvoice = () => {
                   <Form.Control
                     type='text'
                     name='bl'
-                    placeholder='Номер коносамента'
+                    // placeholder='Номер коносамента'
                     {...getFieldProps('bl')}
                     isInvalid={errors.bl && touched.bl}
                   />
@@ -127,7 +130,7 @@ const NewInvoice = () => {
                   <Form.Control
                     type='text'
                     name='container'
-                    placeholder='Номера контейнеров'
+                    // placeholder='Номера контейнеров'
                     {...getFieldProps('container')}
                     isInvalid={errors.container && touched.container}
                   />
@@ -135,14 +138,61 @@ const NewInvoice = () => {
                 </Form.Group>
               </Form.Row>
 
-              <Form.Row>
+              <Form.Label>Позиции счета</Form.Label>
+              <FieldArray name='lines'>
+                {(fieldArrayProps) => {
+                  console.log(fieldArrayProps)
+                  const { push, remove, form } = fieldArrayProps
+                  const { values } = form
+                  const { lines } = values
+                  return (
+                    <div>
+                      {lines.map((line, index) => (
+                        <>
+                          <Form.Control
+                            type='text'
+                            name={`lines.${index}.jobDescription`}
+                            {...getFieldProps(`line.${index}.jobDescription`)}
+                          />
+                          <Form.Control
+                            type='text'
+                            name={`lines.${index}.quantity`}
+                            {...getFieldProps(`line.${index}.quantity`)}
+                          />
+                          <Form.Control
+                            type='text'
+                            name={`lines.${index}.cost`}
+                            {...getFieldProps(`line.${index}.cost`)}
+                          />
+                          <Button
+                            onClick={() => {
+                              remove(index)
+                            }}
+                          >
+                            -
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              push('')
+                            }}
+                          >
+                            +
+                          </Button>
+                        </>
+                      ))}
+                    </div>
+                  )
+                }}
+              </FieldArray>
+
+              {/* <Form.Row>
                 <Form.Group as={Col} xs={8}>
                   <Form.Label>Описание услуги</Form.Label>
                   <Form.Control
                     as='textarea'
                     type='text'
                     name='lines.jobDescription'
-                    placeholder='Описание услуги'
+                    // placeholder='Описание услуги'
                     {...getFieldProps('jobDescription')}
                     isInvalid={errors.jobDescription && touched.jobDescription}
                   />
@@ -178,7 +228,8 @@ const NewInvoice = () => {
                     +
                   </Button>
                 </Form.Group>
-              </Form.Row>
+              </Form.Row> */}
+
               <Button type='submit'>Submit</Button>
             </Form>
           )
