@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 // import { invoices } from '../invoices'
 import { Table, InputGroup, FormControl } from 'react-bootstrap'
 import EditModal from '../shared/UIElements/EditModal'
 import { FormEdit } from '../shared/form/Form'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+import { listInvoiceDetails } from '../actions/invoiceActions'
 
 const SingleInvoice = ({ match }) => {
   const [showModal, setShowModal] = useState(false)
-  const [invoice, setInvoice] = useState()
+  const dispatch = useDispatch()
+  const invoiceDetails = useSelector((state) => state.invoiceDetails)
+  const { loading, error, invoice } = invoiceDetails
 
   useEffect(() => {
-    const fetchedInvoice = async () => {
-      const res = await axios(`/api/invoices/${match.params.iid}`)
-      setInvoice(res.data)
-      // const { _id, client, lines, total } = invoice
-    }
-    fetchedInvoice()
-  }, [match.params.iid])
+    dispatch(listInvoiceDetails(match.params.iid))
+  }, [dispatch, match.params.iid])
+
+  console.log(invoice)
 
   let content = null
   if (invoice) {
@@ -28,7 +31,11 @@ const SingleInvoice = ({ match }) => {
     const handleClose = () => {
       setShowModal(false)
     }
-    content = (
+    content = loading ? (
+      <Loader />
+    ) : error ? (
+      <Message variant='danger'>{error}</Message>
+    ) : (
       <>
         <EditModal
           showModal={showModal}

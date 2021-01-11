@@ -35,10 +35,11 @@ export const FormNewClient = (props) => {
         <form className='baseForm' onSubmit={handleSubmit} noValidate>
           <Form.Control
             type='text'
+            placeholder='Введите название клиента и нажмите Enter'
             id='newClient'
             {...getFieldProps('newClient')}
           />
-        </form>
+          </form>
       )}
     </Formik>
   )
