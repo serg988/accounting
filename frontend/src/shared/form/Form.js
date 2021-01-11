@@ -1,7 +1,8 @@
-import React from 'react'
-import { Form, Col } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Formik } from 'formik'
+import { Form, Col, Button } from 'react-bootstrap'
 
-const FormEl = () => {
+export const FormEdit = () => {
   return (
     <Form>
       <Form.Row>
@@ -19,4 +20,43 @@ const FormEl = () => {
   )
 }
 
-export default FormEl
+export const FormNewClient = (props) => {
+  const initialValues = {
+    newClient: '',
+  }
+  function onSubmit(values) {
+    // Do stuff here...
+    console.log(values);
+        
+  }
+  return (
+    <Formik {...{ initialValues, onSubmit }}>
+      {({ getFieldProps, handleSubmit }) => (
+        <form className='baseForm' onSubmit={handleSubmit} noValidate>
+          <Form.Control
+            type='text'
+            id='newClient'
+            {...getFieldProps('newClient')}
+          />
+        </form>
+      )}
+    </Formik>
+  )
+}
+
+// export const FormNewClient = () => {
+//   return (
+//     <Form>
+//       <Form.Row>
+//         <Form.Control as={Col} placeholder='Новый Клиент' />
+//         <Button
+//           className='btn btn-success ml-2'
+//           type='submit'
+//           variant='primary'
+//         >
+//           Сохранить
+//         </Button>
+//       </Form.Row>
+//     </Form>
+//   )
+// }

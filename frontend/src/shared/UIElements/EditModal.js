@@ -21,7 +21,7 @@ const EditModal = ({ showModal, closeModal, title, body }) => {
           <Button variant='secondary' onClick={closeModal}>
             Close
           </Button>
-          <Button variant='primary'>Сохранить</Button>
+          
         </Modal.Footer>
       </Modal>
     </>
