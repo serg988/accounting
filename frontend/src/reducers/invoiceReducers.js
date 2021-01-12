@@ -6,9 +6,17 @@ import {
   INVOICE_DETAILS_REQUEST,
   INVOICE_DETAILS_SUCCESS,
   INVOICE_DETAILS_FAIL,
+  INVOICE_CREATE_REQUEST,
+  INVOICE_CREATE_SUCCESS,
+  INVOICE_CREATE_FAIL,
+  INVOICE_MODAL_SHOW,
+  INVOICE_MODAL_HIDE,
 } from '../constants/invoiceConstants'
 
-export const invoiceListReducer = (state = { invoices: [] }, action) => {
+export const invoiceListReducer = (
+  state = { invoices: [], nextInvoiceNumber: 0 },
+  action
+) => {
   switch (action.type) {
     case INVOICE_LIST_REQUEST:
       return { ...state, loading: true, invoices: [] }
@@ -31,6 +39,43 @@ export const invoiceDetailsReducer = (state = {}, action) => {
       return { ...state, loading: false, invoice: action.payload }
     case INVOICE_DETAILS_FAIL:
       return { ...state, loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+
+export const invoiceCreateReducer = (
+  state = { invoices: [], isNewInvoiceModalShow: false, error: null },
+  action
+) => {
+  switch (action.type) {
+    case INVOICE_CREATE_REQUEST:
+      return {
+        loading: true,
+      }
+    case INVOICE_CREATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        invoice: action.payload,
+      }
+    case INVOICE_CREATE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    case INVOICE_MODAL_SHOW:
+      return {
+        ...state,
+        isNewClientModalShow: true,
+      }
+    case INVOICE_MODAL_HIDE:
+      return {
+        ...state,
+        isNewClientModalShow: false,
+      }
     default:
       return state
   }

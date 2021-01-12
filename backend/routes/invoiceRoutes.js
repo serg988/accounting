@@ -30,4 +30,29 @@ router.get(
   })
 )
 
+// @desc    Post a new client
+// @route   POST /api/clients
+// @access  Public
+router.post(
+  '/',
+  asyncHandler(async (req, res) => {
+    console.log(req.body)
+    const {number, client, vessel, voyage, bl, container, lines, total, linesNumber } = req.body
+
+    const invoice = await Invoice.create({
+      number, client, vessel, voyage, bl, container, lines, total, linesNumber
+    })
+
+    if (invoice) {
+      res.status(201).json({
+        _id: invoice._id,
+        
+      })
+    } else {
+      res.status(400)
+      throw new Error('Invalid invoice data')
+    }
+  })
+)
+
 export default router

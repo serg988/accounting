@@ -17,6 +17,7 @@ import {
   newClientModalHide,
   newClientModalShow,
 } from '../actions/clientActions'
+import { createInvoice } from '../actions/invoiceActions'
 
 const reqdFieldMsg = 'Обязательное поле'
 
@@ -41,19 +42,26 @@ const NewInvoice = () => {
   const clientCreate = useSelector((state) => state.clientCreate)
   const { isNewClientModalShow, err } = clientCreate
 
+  const invoiceList = useSelector((state) => state.invoiceList)
+  const { nextInvoiceNumber } = invoiceList
+
   useEffect(() => {
     dispatch(listClients())
   }, [dispatch])
 
   const onSubmit = (values) => {
-    console.log(values)
-    const subTotal = values.lines.map((line) => line.quantity * line.cost)
-    const total = subTotal.reduce((a, b) => a + b)
-    console.log(total)
-    values = { ...values, total }
+    values.lines.map((line) => (line.subTotal = line.quantity * line.cost))
+
+    const t = values.lines.map((line) => line.subTotal)
+    const linesNumber = values.lines.length
+    const total = t.reduce((a, b) => a + b)
+
+    values = { ...values, total, linesNumber, number: nextInvoiceNumber }
+
     console.log(values)
     setValidData(values)
-    setShowModal(true)
+    dispatch(createInvoice(values))
+    setShowModal(true) //////////////////////////////////////////////
   }
 
   return (

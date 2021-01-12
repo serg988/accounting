@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik } from 'formik'
-import { Form, Col, Button } from 'react-bootstrap'
+import { Form, Col, Button, Row } from 'react-bootstrap'
 import { createClient, listClients } from '../../actions/clientActions'
 
 export const FormEdit = () => {
@@ -29,19 +29,26 @@ export const FormNewClient = (props) => {
   }
   function onSubmit(values) {
     dispatch(createClient({ name: values.newClient }))
-    
+
     console.log(values.newClient)
   }
   return (
     <Formik {...{ initialValues, onSubmit }}>
       {({ getFieldProps, handleSubmit }) => (
         <form className='baseForm' onSubmit={handleSubmit} noValidate>
-          <Form.Control
-            type='text'
-            placeholder='Введите название клиента и нажмите Enter'
-            id='newClient'
-            {...getFieldProps('newClient')}
-          />
+          <Row>
+            <Col xs={10}>
+              <Form.Control
+                type='text'
+                placeholder='Введите название клиента и нажмите Enter'
+                id='newClient'
+                {...getFieldProps('newClient')}
+              />
+            </Col>
+            <Col>
+              <Button type='submit'>Сохранить</Button>
+            </Col>
+          </Row>
         </form>
       )}
     </Formik>

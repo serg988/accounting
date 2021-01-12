@@ -5,6 +5,7 @@ const linesSchema = mongoose.Schema(
     jobDescription: { type: String, required: true },
     quantity: { type: Number, required: true },
     cost: { type: Number, required: true },
+    subTotal: { type: Number, required: true },
   },
   {
     timestamps: true,
@@ -13,10 +14,6 @@ const linesSchema = mongoose.Schema(
 
 const invoiceSchema = mongoose.Schema(
   {
-    number: {
-      type: Number,
-      required: true,
-    },
     client: {
       type: String,
       // type: mongoose.Schema.Types.ObjectId,
@@ -49,6 +46,10 @@ const invoiceSchema = mongoose.Schema(
       type: Number,
       required: true,
       default: 0,
+    },
+    number: {
+      type: Number,
+      required: true,
     },
   },
   {

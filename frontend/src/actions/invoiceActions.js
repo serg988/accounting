@@ -7,6 +7,11 @@ import {
   INVOICE_DETAILS_REQUEST,
   INVOICE_DETAILS_SUCCESS,
   INVOICE_DETAILS_FAIL,
+  INVOICE_CREATE_REQUEST,
+  INVOICE_CREATE_SUCCESS,
+  INVOICE_CREATE_FAIL,
+  INVOICE_MODAL_SHOW,
+  INVOICE_MODAL_HIDE,
 } from '../constants/invoiceConstants'
 
 export const listInvoices = () => async (dispatch) => {
@@ -49,5 +54,50 @@ export const listInvoiceDetails = (id) => async (dispatch) => {
           ? error.response.data.message
           : error.message,
     })
+  }
+}
+
+export const createInvoice = (invoice) => async (dispatch, getState) => {
+  console.log('NEW INVOICE: ', invoice)
+  try {
+    dispatch({
+      type: INVOICE_CREATE_REQUEST,
+    })
+
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        // Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.post(
+      '/api/invoices',
+      JSON.stringify(invoice),
+      config
+    )
+
+    dispatch({
+      type: INVOICE_CREATE_SUCCESS,
+      payload: data,
+    })
+    dispatch(listInvoices())
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    // if (message === 'Not authorized, token failed') {
+    //   dispatch(logout())
+
+    dispatch({
+      type: INVOICE_CREATE_FAIL,
+      payload: message,
+    })
+    dispatch({ type: INVOICE_MODAL_HIDE })
   }
 }
