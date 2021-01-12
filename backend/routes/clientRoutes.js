@@ -30,4 +30,36 @@ router.get(
   })
 )
 
+// @desc    Post a new client
+// @route   POST /api/clients
+// @access  Public
+router.post(
+  '/',
+  asyncHandler(async (req, res) => {
+    console.log(req.body)
+    const { name } = req.body
+
+    const clientExists = await Client.findOne({ name })
+
+    if (clientExists) {
+      res.status(400)
+      throw new Error('Такой клиент уже существует')
+    }
+
+    const client = await Client.create({
+      name,
+    })
+
+    if (client) {
+      res.status(201).json({
+        _id: client._id,
+        name: client.name,
+      })
+    } else {
+      res.status(400)
+      throw new Error('Invalid client data')
+    }
+  })
+)
+
 export default router

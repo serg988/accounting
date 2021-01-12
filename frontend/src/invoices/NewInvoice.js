@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import * as yup from 'yup'
 import { Formik, ErrorMessage, FieldArray, Field } from 'formik'
@@ -7,6 +8,15 @@ import SuccessModal from '../shared/UIElements/SuccessModal'
 import TextError from '../shared/form/TextError'
 import EditModal from '../shared/UIElements/EditModal'
 import { FormNewClient } from '../shared/form/Form'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+
+import {
+  createClient,
+  listClients,
+  newClientModalHide,
+  newClientModalShow,
+} from '../actions/clientActions'
 
 const reqdFieldMsg = 'Обязательное поле'
 
@@ -21,21 +31,19 @@ const schema = yup.object({
 // const clients = ['TSRY', 'Фортуна', 'ИП Скакун']
 
 const NewInvoice = () => {
-  const [clients, setClients] = useState([])
   const [validData, setValidData] = useState({})
   const [showModal, setShowModal] = useState(false)
-  const [showEditModal, setShowEditModal] = useState(false)
+
+  const dispatch = useDispatch()
+  const clientList = useSelector((state) => state.clientList)
+  const { loading, error, clients } = clientList
+
+  const clientCreate = useSelector((state) => state.clientCreate)
+  const { isNewClientModalShow, err } = clientCreate
 
   useEffect(() => {
-    let clients = []
-    const fetchedClients = async () => {
-      const { data } = await axios('/api/clients')
-      data.map((client) => clients.push(client.name))
-      console.log(clients)
-      setClients(clients)
-    }
-    fetchedClients()
-  }, [])
+    dispatch(listClients())
+  }, [dispatch])
 
   const onSubmit = (values) => {
     console.log(values)
@@ -46,14 +54,6 @@ const NewInvoice = () => {
     console.log(values)
     setValidData(values)
     setShowModal(true)
-  }
-
-  const handleClose = () => {
-    setShowEditModal(false)
-  }
-
-  const newClientHandler = (newClient) => {
-    console.log(newClient)
   }
 
   return (
@@ -89,11 +89,12 @@ const NewInvoice = () => {
         }) => {
           return (
             <>
+              {err && <Message variant='danger'>{err}</Message>}
               <EditModal
-                showModal={showEditModal}
-                closeModal={handleClose}
+                showModal={isNewClientModalShow}
+                closeModal={() => dispatch(newClientModalHide())}
                 title='Введите название компании'
-                body={<FormNewClient newClient={newClientHandler} />}
+                body={<FormNewClient />}
               />
               <Form noValidate onSubmit={handleSubmit}>
                 <Form.Row className='mb-2'>
@@ -117,7 +118,7 @@ const NewInvoice = () => {
                     <Button
                       className='btn-secondary'
                       style={{ marginTop: '31px' }}
-                      onClick={() => setShowEditModal(true)}
+                      onClick={() => dispatch(newClientModalShow())}
                     >
                       или - Новый клиент
                     </Button>

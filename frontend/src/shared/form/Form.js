@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Formik } from 'formik'
 import { Form, Col, Button } from 'react-bootstrap'
+import { createClient, listClients } from '../../actions/clientActions'
 
 export const FormEdit = () => {
   return (
@@ -21,13 +23,14 @@ export const FormEdit = () => {
 }
 
 export const FormNewClient = (props) => {
+  const dispatch = useDispatch()
   const initialValues = {
     newClient: '',
   }
   function onSubmit(values) {
-    // Do stuff here...
-    console.log(values);
-        
+    dispatch(createClient({ name: values.newClient }))
+    
+    console.log(values.newClient)
   }
   return (
     <Formik {...{ initialValues, onSubmit }}>
@@ -39,7 +42,7 @@ export const FormNewClient = (props) => {
             id='newClient'
             {...getFieldProps('newClient')}
           />
-          </form>
+        </form>
       )}
     </Formik>
   )
