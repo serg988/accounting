@@ -14,6 +14,7 @@ import {
 import EditInvoice from './invoices/EditInvoice'
 import CopyInvoice from './invoices/CopyInvoice'
 import InvoicePrint from './invoices/InvoicePrint'
+import PrintScreen from './screens/PrintScreen'
 
 const App = () => {
   return (
@@ -21,7 +22,8 @@ const App = () => {
       <Router>
         <Switch>
           <Route path='/invoices/print' exact>
-            <InvoicePrint />
+            <PrintScreen data='InvoicePrint'/>
+              
           </Route>
 
           <>
