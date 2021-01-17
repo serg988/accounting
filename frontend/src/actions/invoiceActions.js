@@ -16,6 +16,9 @@ import {
   INVOICE_UPDATE_REQUEST,
   INVOICE_UPDATE_SUCCESS,
   INVOICE_UPDATE_FAIL,
+  INVOICE_DELETE_REQUEST,
+  INVOICE_DELETE_SUCCESS,
+  INVOICE_DELETE_FAIL,
 } from '../constants/invoiceConstants'
 
 export const listInvoices = () => async (dispatch) => {
@@ -148,5 +151,43 @@ export const updateInvoice = (invoice) => async (dispatch, getState) => {
       type: INVOICE_UPDATE_FAIL,
       payload: message,
     })
+  }
+}
+export const deleteInvoice = (id) => async (dispatch, getState) => {
+  console.log(id)
+  try {
+    dispatch({
+      type: INVOICE_DELETE_REQUEST,
+      payload: id,
+    })
+
+    // const {
+    //   userLogin: { userInfo },
+    // } = getState()
+
+    // const config = {
+    //   headers: {
+    //     Authorization: `Bearer ${userInfo.token}`,
+    //   },
+    // }
+
+    await axios.delete(`/api/invoices/${id}`) //, config
+
+    dispatch({
+      type: INVOICE_DELETE_SUCCESS,
+      payload: id,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    // if (message === 'Not authorized, token failed') {
+    //   dispatch(logout())
+    // }
+    // dispatch({
+    //   type: INVOICE_DELETE_FAIL,
+    //   payload: message,
+    // })
   }
 }

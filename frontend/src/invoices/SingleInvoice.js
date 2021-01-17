@@ -118,7 +118,7 @@ const SingleInvoice = ({ match }) => {
           data-tip
           data-for='editTip'
         >
-          <i class='far fa-edit'></i>
+          <i className='far fa-edit'></i>
         </Button>
         <ReactTooltip id='editTip' place='top' effect='solid'>
           Редактировать счет
@@ -130,7 +130,7 @@ const SingleInvoice = ({ match }) => {
           data-tip
           data-for='copyTip'
         >
-          <i class='far fa-copy'></i>
+          <i className='far fa-copy'></i>
         </Button>
         <ReactTooltip id='copyTip' place='bottom' effect='solid'>
           Копировать счет
@@ -142,7 +142,7 @@ const SingleInvoice = ({ match }) => {
           data-tip
           data-for='printTip'
         >
-          <i class='fas fa-print'></i>
+          <i className='fas fa-print'></i>
         </Button>
         <ReactTooltip id='printTip' place='left' effect='solid'>
           Сформировать счет для печати
@@ -154,7 +154,7 @@ const SingleInvoice = ({ match }) => {
           data-tip
           data-for='printAvrTip'
         >
-          <i class='fab fa-buysellads'></i>
+          <i className='fab fa-buysellads'></i>
         </Button>
         <ReactTooltip id='printAvrTip' place='right' effect='solid'>
           Сформировать АВР для печати

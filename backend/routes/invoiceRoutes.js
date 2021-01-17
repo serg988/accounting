@@ -112,5 +112,18 @@ router.put(
     }
   })
 )
+router.delete(
+  '/:id',
+asyncHandler(async (req, res) => {
+  const invoice = await Invoice.findById(req.params.id)
+
+  if (invoice) {
+    await invoice.remove()
+    res.json({ message: 'Invoice removed' })
+  } else {
+    res.status(404)
+    throw new Error('Invoice not found')
+  }
+}))
 
 export default router

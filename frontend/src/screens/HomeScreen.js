@@ -5,7 +5,7 @@ import { Button, Modal, Table } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 
-import { listInvoices } from '../actions/invoiceActions'
+import { listInvoices, deleteInvoice } from '../actions/invoiceActions'
 import InvoiceItem from '../invoices/InvoiceItem'
 
 const HomeScreen = () => {
@@ -32,7 +32,9 @@ const HomeScreen = () => {
   }
 
   const deleteInvoiceHandler = (id) => {
-    alert('Delete invoice: ' + deletedInvoiceId + '?')
+    dispatch(deleteInvoice(id))
+    setShowDeleteModal(false)
+    console.log(id)
   }
   return (
     <div className='table-container'>
@@ -46,7 +48,10 @@ const HomeScreen = () => {
           <Button variant='secondary' onClick={handleClose}>
             Отмена
           </Button>
-          <Button variant='primary' onClick={deleteInvoiceHandler}>
+          <Button
+            variant='primary'
+            onClick={() => deleteInvoiceHandler(deletedInvoiceId)}
+          >
             Удалить
           </Button>
         </Modal.Footer>

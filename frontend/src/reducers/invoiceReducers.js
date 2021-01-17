@@ -14,7 +14,10 @@ import {
   SET_CURRENT_INVOICE,
   INVOICE_UPDATE_REQUEST,
   INVOICE_UPDATE_SUCCESS,
-  INVOICE_UPDATE_FAIL
+  INVOICE_UPDATE_FAIL,
+  INVOICE_DELETE_REQUEST,
+  INVOICE_DELETE_SUCCESS,
+  INVOICE_DELETE_FAIL,
 } from '../constants/invoiceConstants'
 
 export const invoiceListReducer = (
@@ -30,6 +33,17 @@ export const invoiceListReducer = (
       return { ...state, loading: false, error: action.payload }
     case SET_NEXT_INVOICE_NUMBER:
       return { ...state, nextInvoiceNumber: action.payload }
+    case INVOICE_DELETE_REQUEST:
+      return { ...state, loading: true }
+    case INVOICE_DELETE_SUCCESS:
+      return {
+        ...state,
+        invoices: state.invoices.filter((i) => i._id !== action.payload),
+        loading: false,
+        success: true,
+      }
+    case INVOICE_DELETE_FAIL:
+      return { ...state, loading: false, error: action.payload }
     default:
       return state
   }
@@ -54,11 +68,11 @@ export const invoiceDetailsReducer = (state = {}, action) => {
       return { loading: false, success: true, product: action.payload }
     case INVOICE_UPDATE_FAIL:
       return { loading: false, error: action.payload }
-     default:
+
+    default:
       return state
   }
 }
-
 
 export const invoiceCreateReducer = (
   state = { invoices: [], isNewInvoiceModalShow: false, error: null },

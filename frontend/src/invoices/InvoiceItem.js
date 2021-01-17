@@ -8,11 +8,11 @@ const InvoiceItem = ({ invoice, editHandler, deleteHandler }) => {
       <td>{invoice.client}</td>
       <td>${invoice.total}</td>
       <td onClick={() => editHandler(invoice._id)}>
-        <i class='fas fa-eye' style={{ color: 'green', cursor: 'pointer' }}></i>
+        <i className='fas fa-eye' style={{ color: 'green', cursor: 'pointer' }}></i>
       </td>
       <td onClick={() => deleteHandler(invoice._id)}>
         <i
-          class='far fa-trash-alt'
+          className='far fa-trash-alt'
           style={{ color: 'red', cursor: 'pointer' }}
         ></i>
       </td>
