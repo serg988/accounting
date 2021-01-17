@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
 import { Formik, ErrorMessage, FieldArray, Field } from 'formik'
-import { Form, Col, Button } from 'react-bootstrap'
 import ReactTooltip from 'react-tooltip'
+import { Form, Col, Button } from 'react-bootstrap'
 import SuccessModal from '../shared/UIElements/SuccessModal'
 import TextError from '../shared/form/TextError'
 import EditModal from '../shared/UIElements/EditModal'
@@ -71,21 +71,7 @@ const NewInvoice = () => {
         validationSchema={schema}
         onSubmit={onSubmit}
         validateOnChange={false}
-        initialValues={{
-          client: '',
-          vessel: '',
-          voyage: '',
-          bl: '',
-          container: '',
-          lines: [
-            {
-              jobDescription: '',
-              quantity: '',
-              cost: '',
-            },
-          ],
-          linesNumber: [''],
-        }}
+        initialValues={current}
       >
         {({
           handleSubmit,
@@ -98,6 +84,7 @@ const NewInvoice = () => {
         }) => {
           return (
             <>
+              <h2>Копия счета № {current.number}</h2>
               {err && <Message variant='danger'>{err}</Message>}
               <EditModal
                 showModal={isNewClientModalShow}

@@ -1,0 +1,11 @@
+.InvoicePrint {
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+}
+/* .InvoicePrint .mainTable, tr, td, th, thead {
+  border: 1px solid black;
+} */
+/* .InvoicePrint .mainTable, tr, th {
+  border: 2px solid black;
+} */

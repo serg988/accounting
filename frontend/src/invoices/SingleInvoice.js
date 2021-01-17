@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
+import ReactTooltip from 'react-tooltip'
 import { withRouter } from 'react-router-dom'
-// import { invoices } from '../invoices'
-import { Table, InputGroup, FormControl } from 'react-bootstrap'
-import EditModal from '../shared/UIElements/EditModal'
-import { FormEdit } from '../shared/form/Form'
+import { useHistory } from 'react-router-dom'
+import { Table, Button } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { listInvoiceDetails } from '../actions/invoiceActions'
+import {
+  listInvoiceDetails,
+  setCurrentInvoice,
+} from '../actions/invoiceActions'
 
 const SingleInvoice = ({ match }) => {
-  const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch()
   const invoiceDetails = useSelector((state) => state.invoiceDetails)
   const { loading, error, invoice } = invoiceDetails
+
+  const history = useHistory()
 
   useEffect(() => {
     dispatch(listInvoiceDetails(match.params.iid))
@@ -24,41 +26,78 @@ const SingleInvoice = ({ match }) => {
 
   let content = null
   if (invoice) {
-    const { number, client, lines, total } = invoice
-    const handleShow = () => {
-      setShowModal(true)
+    const {
+      number,
+      client,
+      vessel,
+      voyage,
+      bl,
+      container,
+      lines,
+      total,
+    } = invoice
+
+    const editHandler = (invoice) => {
+      console.log('IIIIII', invoice)
+      dispatch(setCurrentInvoice(invoice))
+      history.push('/invoices/edit')
     }
-    const handleClose = () => {
-      setShowModal(false)
+
+    const copyHandler = (invoice) => {
+      console.log('IIIIII', invoice)
+      dispatch(setCurrentInvoice(invoice))
+      history.push('/invoices/copy')
     }
+
+    const printHandler = (invoice) => {
+      dispatch(setCurrentInvoice(invoice))
+      history.push('/invoices/print')
+    }
+
     content = loading ? (
       <Loader />
     ) : error ? (
       <Message variant='danger'>{error}</Message>
     ) : (
       <>
-        <EditModal
-          showModal={showModal}
-          closeModal={handleClose}
-          title='Редактировать Запись'
-          body={<FormEdit />}
-        />
         <h2 className='text-center'>Счет № {number}</h2>
-        <h5>Клиент: {client}</h5>
+        <h4>Клиент: {client}</h4>
         <Table bordered hover size='sm'>
+          <tbody>
+            <tr>
+              <td>Судно: </td>
+              <td>{vessel}</td>
+            </tr>
+            <tr>
+              <td>Номер рейса: </td>
+              <td>{voyage}</td>
+            </tr>
+            <tr>
+              <td>Номер коносамента:</td>
+              <td>{bl}</td>
+            </tr>
+            <tr>
+              <td>Номера контейнеров:</td>
+              <td>{container}</td>
+            </tr>
+          </tbody>
+        </Table>
+        <Table bordered striped hover size='sm'>
           <thead>
             <tr>
-              <th style={{ width: '75%' }}>Оказанная услуга</th>
+              <th style={{ width: '70%' }}>Оказанная услуга</th>
               <th style={{ width: '10%' }}>Количество</th>
-              <th style={{ width: '15%' }}>Цена </th>
+              <th style={{ width: '10%' }}>Цена </th>
+              <th style={{ width: '10%' }}>Сумма </th>
             </tr>
           </thead>
           <tbody>
             {lines.map((line) => (
-              <tr key={Math.random()} onClick={handleShow}>
+              <tr key={Math.random()}>
                 <td>{line.jobDescription}</td>
                 <td>{line.quantity}</td>
                 <td>{line.cost}</td>
+                <td>{line.subTotal}</td>
               </tr>
             ))}
             <tr>
@@ -66,12 +105,60 @@ const SingleInvoice = ({ match }) => {
                 <strong>Всего: </strong>
               </td>
               <td></td>
+              <td></td>
               <td>
                 <strong>{total} руб.</strong>
               </td>
             </tr>
           </tbody>
         </Table>
+        <Button
+          variant='outline-primary'
+          onClick={() => editHandler(invoice)}
+          data-tip
+          data-for='editTip'
+        >
+          <i class='far fa-edit'></i>
+        </Button>
+        <ReactTooltip id='editTip' place='top' effect='solid'>
+          Редактировать счет
+        </ReactTooltip>
+        <Button
+          variant='outline-info'
+          className='ml-3'
+          onClick={() => copyHandler(invoice)}
+          data-tip
+          data-for='copyTip'
+        >
+          <i class='far fa-copy'></i>
+        </Button>
+        <ReactTooltip id='copyTip' place='bottom' effect='solid'>
+          Копировать счет
+        </ReactTooltip>
+        <Button
+          variant='outline-success'
+          className='ml-5'
+          onClick={() => printHandler(invoice)}
+          data-tip
+          data-for='printTip'
+        >
+          <i class='fas fa-print'></i>
+        </Button>
+        <ReactTooltip id='printTip' place='left' effect='solid'>
+          Сформировать счет для печати
+        </ReactTooltip>
+        <Button
+          variant='outline-dark'
+          className='ml-3'
+          onClick={() => printHandler(invoice)}
+          data-tip
+          data-for='printAvrTip'
+        >
+          <i class='fab fa-buysellads'></i>
+        </Button>
+        <ReactTooltip id='printAvrTip' place='right' effect='solid'>
+          Сформировать АВР для печати
+        </ReactTooltip>
       </>
     )
   }

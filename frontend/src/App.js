@@ -11,26 +11,43 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom'
+import EditInvoice from './invoices/EditInvoice'
+import CopyInvoice from './invoices/CopyInvoice'
+import InvoicePrint from './invoices/InvoicePrint'
 
 const App = () => {
   return (
     <>
       <Router>
-        <Header />
-        <main className='py-3'>
-          <Container>
-            <Route path='/' exact>
-              <HomeScreen />
-            </Route>
-            <Route path='/invoice/:iid' exact>
-              <SingleInvoice />
-            </Route>
-            <Route path='/new-invoice' exact>
-              <NewInvoice />
-            </Route>
-          </Container>
-        </main>
-        <Footer />
+        <Switch>
+          <Route path='/invoices/print' exact>
+            <InvoicePrint />
+          </Route>
+
+          <>
+            <Header />
+            <main className='py-3'>
+              <Container>
+                <Route path='/' exact>
+                  <HomeScreen />
+                </Route>
+                <Route path='/invoice/:iid' exact>
+                  <SingleInvoice />
+                </Route>
+                <Route path='/new-invoice' exact>
+                  <NewInvoice />
+                </Route>
+                <Route path='/invoices/edit' exact>
+                  <EditInvoice />
+                </Route>
+                <Route path='/invoices/copy' exact>
+                  <CopyInvoice />
+                </Route>
+              </Container>
+            </main>
+            <Footer />
+          </>
+        </Switch>
       </Router>
     </>
   )

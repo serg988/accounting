@@ -1,26 +1,16 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Formik } from 'formik'
+import * as Yup from 'yup'
+import { ErrorMessage, Formik } from 'formik'
 import { Form, Col, Button, Row } from 'react-bootstrap'
 import { createClient, listClients } from '../../actions/clientActions'
+import TextError from './TextError'
 
-export const FormEdit = () => {
-  return (
-    <Form>
-      <Form.Row>
-        <Col xs={9}>
-          <Form.Control as='textarea' placeholder='Описание услуги' />
-        </Col>
-        <Col>
-          <Form.Control placeholder='Количество' />
-        </Col>
-        <Col>
-          <Form.Control placeholder='Цена' />
-        </Col>
-      </Form.Row>
-    </Form>
-  )
-}
+// import { Formik, Form } from 'formik'
+
+import FormikControl from './FormikControl'
+
+const reqdFieldMsg = 'Обязательное поле'
 
 export const FormNewClient = (props) => {
   const dispatch = useDispatch()
@@ -28,27 +18,40 @@ export const FormNewClient = (props) => {
     newClient: '',
   }
   function onSubmit(values) {
-    dispatch(createClient({ name: values.newClient }))
+    dispatch(createClient({ name: values.newClient, address: values.address }))
 
     console.log(values.newClient)
   }
   return (
     <Formik {...{ initialValues, onSubmit }}>
-      {({ getFieldProps, handleSubmit }) => (
-        <form className='baseForm' onSubmit={handleSubmit} noValidate>
-          <Row>
-            <Col xs={10}>
-              <Form.Control
-                type='text'
-                placeholder='Введите название клиента и нажмите Enter'
-                id='newClient'
-                {...getFieldProps('newClient')}
-              />
-            </Col>
-            <Col>
-              <Button type='submit'>Сохранить</Button>
-            </Col>
-          </Row>
+      {({ getFieldProps, handleSubmit, errors, touched }) => (
+        <form
+          className='baseForm'
+          onSubmit={handleSubmit}
+          // validationSchema={schema}
+        >
+          <Form.Control
+            type='text'
+            placeholder='Введите название клиента'
+            id='newClient'
+            {...getFieldProps('newClient')}
+            isInvalid={errors.newClient && touched.newClient}
+          />
+          <ErrorMessage name='newClient' component={TextError} />
+
+          <Form.Control
+            className='mt-2'
+            type='text'
+            placeholder='Введите адрес клиента'
+            id='newClient'
+            {...getFieldProps('address')}
+            isInvalid={errors.newClient && touched.newClient}
+          />
+          <ErrorMessage name='newClient' component={TextError} />
+
+          <Button className='mt-2' type='submit' disabled={errors.newClient}>
+            Сохранить
+          </Button>
         </form>
       )}
     </Formik>
