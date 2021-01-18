@@ -18,6 +18,9 @@ import {
   INVOICE_DELETE_REQUEST,
   INVOICE_DELETE_SUCCESS,
   INVOICE_DELETE_FAIL,
+  SET_AVR_DATE,
+  SET_AVR_DATE_MODAL_ON,
+  SET_AVR_DATE_MODAL_OFF,
 } from '../constants/invoiceConstants'
 
 export const invoiceListReducer = (
@@ -75,7 +78,7 @@ export const invoiceDetailsReducer = (state = {}, action) => {
 }
 
 export const invoiceCreateReducer = (
-  state = { invoices: [], isNewInvoiceModalShow: false, error: null },
+  state = { invoices: [], isNewInvoiceModalShow: false, isAvrModalShow: false, error: null },
   action
 ) => {
   switch (action.type) {
@@ -104,6 +107,19 @@ export const invoiceCreateReducer = (
       return {
         ...state,
         isNewClientModalShow: false,
+      }
+    case SET_AVR_DATE_MODAL_ON:
+      return {
+        ...state, isAvrModalShow: true
+      }
+    case SET_AVR_DATE_MODAL_OFF:
+      return {
+        ...state, isAvrModalShow: false
+      }
+    case SET_AVR_DATE:
+      return {
+        ...state,
+        avrDate: action.payload
       }
     default:
       return state

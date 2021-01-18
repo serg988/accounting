@@ -193,7 +193,9 @@ const EditInvoice = () => {
                     )}
                   />
 
-                  <Button type='submit'>Отправить</Button>
+                  <Button type='submit'>
+                    <i className='far fa-save'></i>  Сохранить
+                  </Button>
                 </Form>
               ) : (
                 <div>Выберете счет для редактирования заново</div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import * as yup from 'yup'
 import { Formik, ErrorMessage, FieldArray, Field } from 'formik'
 import { Form, Col, Button } from 'react-bootstrap'
@@ -13,7 +14,6 @@ import Loader from '../components/Loader'
 
 import {
   createClient,
-  listClients,
   newClientModalHide,
   newClientModalShow,
 } from '../actions/clientActions'
@@ -33,9 +33,11 @@ const NewInvoice = () => {
   const [validData, setValidData] = useState({})
   const [showModal, setShowModal] = useState(false)
 
+  const history = useHistory()
+
   const dispatch = useDispatch()
   const clientList = useSelector((state) => state.clientList)
-  const { loading, error, clients } = clientList
+  const { clients } = clientList
 
   const clientCreate = useSelector((state) => state.clientCreate)
   const { isNewClientModalShow, err } = clientCreate
@@ -43,12 +45,11 @@ const NewInvoice = () => {
   const invoiceList = useSelector((state) => state.invoiceList)
   const { nextInvoiceNumber } = invoiceList
 
+  const invoiceCreate = useSelector((state) => state.invoiceCreate)
+  const { invoice } = invoiceCreate
+
   const invoiceDetails = useSelector((state) => state.invoiceDetails)
   const { current } = invoiceDetails
-
-  useEffect(() => {
-    dispatch(listClients())
-  }, [dispatch])
 
   const onSubmit = (values) => {
     values.lines.map((line) => (line.subTotal = line.quantity * line.cost))
@@ -62,7 +63,8 @@ const NewInvoice = () => {
     console.log(values)
     setValidData(values)
     dispatch(createInvoice(values))
-    setShowModal(true) //////////////////////////////////////////////
+    console.log(invoice);
+    history.push('/') //////////////////////////////////////////////
   }
 
   return (
@@ -118,7 +120,7 @@ const NewInvoice = () => {
                     >
                       <option></option>
                       {clients.map((client) => (
-                        <option key={client}>{client}</option>
+                        <option key={client.name}>{client.name}</option>
                       ))}
                     </Form.Control>
                     <ErrorMessage name='client' component={TextError} />

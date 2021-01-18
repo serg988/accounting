@@ -10,7 +10,9 @@ const Header = () => {
         <Container>
           <LinkContainer to='/'>
             <Nav.Link>
-              <Navbar.Brand>Все Счета</Navbar.Brand>
+              <Navbar.Brand>
+                <i className='fas fa-home fa-2x'></i>
+              </Navbar.Brand>
             </Nav.Link>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -24,7 +26,7 @@ const Header = () => {
 
               <LinkContainer to='/login'>
                 <Nav.Link>
-                  <i className='fas fa-user'></i>Sign In
+                  <i className='fas fa-sign-out-alt'></i> Выход
                 </Nav.Link>
               </LinkContainer>
             </Nav>

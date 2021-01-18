@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { Button, Modal, Table } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import { listClients } from '../actions/clientActions'
 
 import { listInvoices, deleteInvoice } from '../actions/invoiceActions'
 import InvoiceItem from '../invoices/InvoiceItem'
@@ -17,6 +18,10 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(listInvoices())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(listClients())
   }, [dispatch])
 
   const history = useHistory()
@@ -38,7 +43,7 @@ const HomeScreen = () => {
   }
   return (
     <div className='table-container'>
-      <h2 className='text-center mb-3'>Bartrans Logistics Account Assistant</h2>
+      <h1 className='text-center mb-3'>Bartrans Logistics Account Assistant</h1>
       <Modal show={showDeleteModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Удалить счет</Modal.Title>
@@ -67,7 +72,7 @@ const HomeScreen = () => {
               <th style={{ width: '5%' }}>#</th>
               <th style={{ width: '10%' }}>Дата</th>
               <th style={{ width: '70%' }}>Клиент </th>
-              <th style={{ width: '9%' }}>Сумма </th>
+              <th style={{ width: '9%' }}>Сумма, ₽</th>
               <th style={{ width: '3%' }}></th>
               <th style={{ width: '3%' }}></th>
             </tr>

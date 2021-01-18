@@ -6,13 +6,17 @@ import { useHistory } from 'react-router-dom'
 import { Table, Button } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import PickDateModal from '../shared/UIElements/PickDateModal'
 import {
   listInvoiceDetails,
   setCurrentInvoice,
+  setAvrDateModalOn,
 } from '../actions/invoiceActions'
 
 const SingleInvoice = ({ match }) => {
   const dispatch = useDispatch()
+  const invoiceCreate = useSelector(state => state.invoiceCreate)
+  const { isAvrModalShow } = invoiceCreate
   const invoiceDetails = useSelector((state) => state.invoiceDetails)
   const { loading, error, invoice } = invoiceDetails
 
@@ -49,9 +53,15 @@ const SingleInvoice = ({ match }) => {
       history.push('/invoices/copy')
     }
 
-    const printHandler = (invoice) => {
+    const printInvoiceHandler = (invoice) => {
       dispatch(setCurrentInvoice(invoice))
       history.push('/invoices/print')
+    }
+
+    const printAvrHandler = (invoice) => {
+      dispatch(setAvrDateModalOn())
+      dispatch(setCurrentInvoice(invoice))
+      // history.push('/invoices/AvrPint')
     }
 
     content = loading ? (
@@ -60,6 +70,11 @@ const SingleInvoice = ({ match }) => {
       <Message variant='danger'>{error}</Message>
     ) : (
       <>
+        <PickDateModal
+          showModal={isAvrModalShow}
+          // closeModal={() => dispatch(PickDateModalHide())}
+          title='Введите дату АВР'
+        />
         <h2 className='text-center'>Счет № {number}</h2>
         <h4>Клиент: {client}</h4>
         <Table bordered hover size='sm'>
@@ -138,7 +153,7 @@ const SingleInvoice = ({ match }) => {
         <Button
           variant='outline-success'
           className='ml-5'
-          onClick={() => printHandler(invoice)}
+          onClick={() => printInvoiceHandler(invoice)}
           data-tip
           data-for='printTip'
         >
@@ -150,7 +165,7 @@ const SingleInvoice = ({ match }) => {
         <Button
           variant='outline-dark'
           className='ml-3'
-          onClick={() => printHandler(invoice)}
+          onClick={() => printAvrHandler(invoice)}
           data-tip
           data-for='printAvrTip'
         >

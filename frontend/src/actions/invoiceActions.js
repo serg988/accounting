@@ -19,6 +19,9 @@ import {
   INVOICE_DELETE_REQUEST,
   INVOICE_DELETE_SUCCESS,
   INVOICE_DELETE_FAIL,
+  SET_AVR_DATE,
+  SET_AVR_DATE_MODAL_ON,
+  SET_AVR_DATE_MODAL_OFF,
 } from '../constants/invoiceConstants'
 
 export const listInvoices = () => async (dispatch) => {
@@ -47,6 +50,7 @@ export const listInvoices = () => async (dispatch) => {
 }
 
 export const listInvoiceDetails = (id) => async (dispatch) => {
+  console.log('IDIII', id);
   try {
     dispatch({ type: INVOICE_DETAILS_REQUEST })
 
@@ -190,4 +194,22 @@ export const deleteInvoice = (id) => async (dispatch, getState) => {
     //   payload: message,
     // })
   }
+}
+
+export const setAvrDateModalOn = () => (dispatch) => {
+  dispatch({
+    type: SET_AVR_DATE_MODAL_ON,
+  })
+}
+export const setAvrDateModalOff = () => (dispatch) => {
+  dispatch({
+    type: SET_AVR_DATE_MODAL_OFF,
+  })
+}
+
+export const setAvrDate = (date) => (dispatch) => {
+  dispatch({
+    type: SET_AVR_DATE,
+    payload: date
+  })
 }

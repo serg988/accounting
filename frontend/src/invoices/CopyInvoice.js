@@ -244,7 +244,9 @@ const NewInvoice = () => {
                   )}
                 />
 
-                <Button type='submit'>Отправить</Button>
+                <Button type='submit'>
+                  <i className='far fa-paper-plane'></i>  Отправить
+                </Button>
               </Form>
             </>
           )

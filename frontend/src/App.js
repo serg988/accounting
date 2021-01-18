@@ -22,8 +22,10 @@ const App = () => {
       <Router>
         <Switch>
           <Route path='/invoices/print' exact>
-            <PrintScreen data='InvoicePrint'/>
-              
+            <PrintScreen data='InvoicePrint' />
+          </Route>
+          <Route path='/invoices/AvrPrint' exact>
+            <PrintScreen data='AvrPrint' />
           </Route>
 
           <>
