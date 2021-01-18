@@ -29,7 +29,7 @@ class InvoicePrint extends React.PureComponent {
         )}
         <span style={{ float: 'right' }}>Валюта: рубли</span>
 
-        <Table className={classes.mainTable} size='sm'>
+        <Table className={classes.mainTable} size={this.props.size}>
           {/* <thead > */}
           <tr>
             <th style={{ width: '70%' }}> Наименование товара </th>
@@ -76,6 +76,13 @@ class InvoicePrint extends React.PureComponent {
           </tbody>
         </Table>
         <div className='mt-5'>
+          {this.props.size !== 'sm' && (
+            <>
+              <br />
+              <br />
+              <br />
+            </>
+          )}
           <span style={{ float: 'left' }}>Руководитель предприятия:</span>
           <span style={{ marginLeft: '50%' }}>Попов С.В.</span>
         </div>

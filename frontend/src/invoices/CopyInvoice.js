@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Redirect, useHistory } from 'react-router-dom'
 import * as yup from 'yup'
 import { Formik, ErrorMessage, FieldArray, Field } from 'formik'
 import ReactTooltip from 'react-tooltip'
@@ -32,6 +33,7 @@ const schema = yup.object({
 const NewInvoice = () => {
   const [validData, setValidData] = useState({})
   const [showModal, setShowModal] = useState(false)
+  const history = useHistory()
 
   const dispatch = useDispatch()
   const clientList = useSelector((state) => state.clientList)
@@ -62,7 +64,7 @@ const NewInvoice = () => {
     console.log(values)
     setValidData(values)
     dispatch(createInvoice(values))
-    setShowModal(true) //////////////////////////////////////////////
+    history.push('/') //////////////////////////////////////////////
   }
 
   return (
@@ -105,7 +107,7 @@ const NewInvoice = () => {
                     >
                       <option></option>
                       {clients.map((client) => (
-                        <option key={client}>{client}</option>
+                        <option key={client.name}>{client.name}</option>
                       ))}
                     </Form.Control>
                     <ErrorMessage name='client' component={TextError} />
@@ -245,7 +247,7 @@ const NewInvoice = () => {
                 />
 
                 <Button type='submit'>
-                  <i className='far fa-paper-plane'></i>  Отправить
+                  <i className='far fa-paper-plane'></i> Отправить
                 </Button>
               </Form>
             </>

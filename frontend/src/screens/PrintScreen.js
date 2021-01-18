@@ -22,15 +22,19 @@ const PrintScreen = ({ data }) => {
   const clientList = useSelector((state) => state.clientList)
   const { clients } = clientList
 
-  console.log('CLIENTS', clients);
+  console.log('CLIENTS', clients)
   if (clients.length === 0) {
     history.push('/')
     return <>.</>
-  } 
+  }
 
   const address = clients.find((client) => client.name === current.client)
     .address
 
+  let size
+  if (current.linesNumber > 12) {
+    size = 'sm'
+  }
 
   const text = rubles(current.total)
 
@@ -43,7 +47,12 @@ const PrintScreen = ({ data }) => {
   return (
     <>
       {data === 'InvoicePrint' ? (
-        <InvoicePrint current={current} date={date} ref={componentRef} />
+        <InvoicePrint
+          current={current}
+          date={date}
+          size={size}
+          ref={componentRef}
+        />
       ) : (
         <AvrPrint
           current={current}
@@ -51,6 +60,7 @@ const PrintScreen = ({ data }) => {
           address={address}
           text={text}
           ref={componentRef}
+          size={size}
         />
       )}
       <Row>

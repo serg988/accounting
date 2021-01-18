@@ -63,7 +63,7 @@ const NewInvoice = () => {
     console.log(values)
     setValidData(values)
     dispatch(createInvoice(values))
-    console.log(invoice);
+    console.log(invoice)
     history.push('/') //////////////////////////////////////////////
   }
 
@@ -216,7 +216,7 @@ const NewInvoice = () => {
                               placeholder='Цена'
                             />
                           </Form.Group>
-                          <Form.Group>
+                          {arrayHelpers.form.values.lines.length > 1 && <Form.Group>
                             <Button
                               variant='outline-primary'
                               type='button'
@@ -235,7 +235,7 @@ const NewInvoice = () => {
                             >
                               Удалить строку
                             </ReactTooltip>
-                          </Form.Group>
+                          </Form.Group>}
                         </Form.Row>
                       ))}
                       <Form.Group>

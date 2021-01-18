@@ -16,7 +16,7 @@ class InvoicePrint extends React.PureComponent {
         {/* {this.props.text}
         {this.props.date} */}
 
-        <h2 className='text-center my-4' style={{fontWeight:'700'}}>
+        <h2 className='text-center my-4' style={{ fontWeight: '700' }}>
           АКТ ВЫПОЛНЕННЫХ РАБОТ № {this.props.current.number} от{' '}
           {this.props.date}
         </h2>
@@ -33,7 +33,7 @@ class InvoicePrint extends React.PureComponent {
           <span>Контейнеры №: {this.props.current.container}</span>
         )}
         <span style={{ float: 'right' }}>Валюта: рубли</span>
-        <Table className={classes.mainTable} size='sm'>
+        <Table className={classes.mainTable} size={this.props.size}>
           <thead>
             <tr>
               <th style={{ width: '70%' }}> Наименование работы(услуги) </th>
@@ -84,6 +84,13 @@ class InvoicePrint extends React.PureComponent {
           Вышеперечисленные услуги выполнены полностью и в срок. Заказчик
           претензий по объёму, качеству и срокам оказания услуг не имеет.
         </p>
+        {this.props.size !== 'sm' && (
+          <>
+            <br />
+            <br />
+            <br />
+          </>
+        )}
         <div className='mt-5'>
           <strong>
             <span style={{ float: 'left' }}>Руководитель предприятия:</span>
