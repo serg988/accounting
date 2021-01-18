@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { setAvrDate, setAvrDateModalOff} from '../../actions/invoiceActions'
 
-import { Form, FormControl, Modal } from 'react-bootstrap'
-import { Button } from 'react-bootstrap'
+import { Form, Modal } from 'react-bootstrap'
 
 const PickDateModal = ({ showModal, closeModal, title, body }) => {
   const history = useHistory()
@@ -22,7 +21,6 @@ const PickDateModal = ({ showModal, closeModal, title, body }) => {
     history.push('/invoices/AvrPrint')
   }
 
-  // console.log(avrDate)
   return (
     <>
       <Modal

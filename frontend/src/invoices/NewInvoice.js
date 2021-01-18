@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import * as yup from 'yup'
@@ -10,10 +10,8 @@ import TextError from '../shared/form/TextError'
 import EditModal from '../shared/UIElements/EditModal'
 import { FormNewClient } from '../shared/form/Form'
 import Message from '../components/Message'
-import Loader from '../components/Loader'
 
 import {
-  createClient,
   newClientModalHide,
   newClientModalShow,
 } from '../actions/clientActions'
@@ -45,12 +43,6 @@ const NewInvoice = () => {
   const invoiceList = useSelector((state) => state.invoiceList)
   const { nextInvoiceNumber } = invoiceList
 
-  const invoiceCreate = useSelector((state) => state.invoiceCreate)
-  const { invoice } = invoiceCreate
-
-  const invoiceDetails = useSelector((state) => state.invoiceDetails)
-  const { current } = invoiceDetails
-
   const onSubmit = (values) => {
     values.lines.map((line) => (line.subTotal = line.quantity * line.cost))
 
@@ -60,10 +52,8 @@ const NewInvoice = () => {
 
     values = { ...values, total, linesNumber, number: nextInvoiceNumber }
 
-    console.log(values)
     setValidData(values)
     dispatch(createInvoice(values))
-    console.log(invoice)
     history.push('/') //////////////////////////////////////////////
   }
 

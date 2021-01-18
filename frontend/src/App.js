@@ -8,12 +8,10 @@ import NewInvoice from './invoices/NewInvoice'
 import {
   BrowserRouter as Router,
   Route,
-  Redirect,
   Switch,
 } from 'react-router-dom'
 import EditInvoice from './invoices/EditInvoice'
 import CopyInvoice from './invoices/CopyInvoice'
-import InvoicePrint from './invoices/InvoicePrint'
 import PrintScreen from './screens/PrintScreen'
 
 const App = () => {

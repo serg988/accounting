@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 import { withRouter } from 'react-router-dom'
@@ -26,8 +26,6 @@ const SingleInvoice = ({ match }) => {
     dispatch(listInvoiceDetails(match.params.iid))
   }, [dispatch, match.params.iid])
 
-  console.log(invoice)
-
   let content = null
   if (invoice) {
     const {
@@ -42,13 +40,11 @@ const SingleInvoice = ({ match }) => {
     } = invoice
 
     const editHandler = (invoice) => {
-      console.log('IIIIII', invoice)
       dispatch(setCurrentInvoice(invoice))
       history.push('/invoices/edit')
     }
 
     const copyHandler = (invoice) => {
-      console.log('IIIIII', invoice)
       dispatch(setCurrentInvoice(invoice))
       history.push('/invoices/copy')
     }

@@ -30,7 +30,7 @@ class InvoicePrint extends React.PureComponent {
         <span style={{ float: 'right' }}>Валюта: рубли</span>
 
         <Table className={classes.mainTable} size={this.props.size}>
-          {/* <thead > */}
+          <thead >
           <tr>
             <th style={{ width: '70%' }}> Наименование товара </th>
             <th> Ед. изм. </th>
@@ -38,7 +38,7 @@ class InvoicePrint extends React.PureComponent {
             <th> Цена </th>
             <th> Сумма </th>
           </tr>
-          {/* </thead> */}
+          </thead>
           <tbody>
             {this.props.current.lines.map((line) => (
               <tr key={line._id}>

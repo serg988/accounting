@@ -36,7 +36,6 @@ router.get(
 router.post(
   '/',
   asyncHandler(async (req, res) => {
-    console.log(req.body)
     const { name, address } = req.body
 
     const clientExists = await Client.findOne({ name })

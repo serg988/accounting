@@ -1,16 +1,9 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import * as Yup from 'yup'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 import { ErrorMessage, Formik } from 'formik'
-import { Form, Col, Button, Row } from 'react-bootstrap'
-import { createClient, listClients } from '../../actions/clientActions'
+import { Form, Button } from 'react-bootstrap'
+import { createClient } from '../../actions/clientActions'
 import TextError from './TextError'
-
-// import { Formik, Form } from 'formik'
-
-import FormikControl from './FormikControl'
-
-const reqdFieldMsg = 'Обязательное поле'
 
 export const FormNewClient = (props) => {
   const dispatch = useDispatch()
@@ -19,8 +12,6 @@ export const FormNewClient = (props) => {
   }
   function onSubmit(values) {
     dispatch(createClient({ name: values.newClient, address: values.address }))
-
-    console.log(values.newClient)
   }
   return (
     <Formik {...{ initialValues, onSubmit }}>
@@ -57,20 +48,3 @@ export const FormNewClient = (props) => {
     </Formik>
   )
 }
-
-// export const FormNewClient = () => {
-//   return (
-//     <Form>
-//       <Form.Row>
-//         <Form.Control as={Col} placeholder='Новый Клиент' />
-//         <Button
-//           className='btn btn-success ml-2'
-//           type='submit'
-//           variant='primary'
-//         >
-//           Сохранить
-//         </Button>
-//       </Form.Row>
-//     </Form>
-//   )
-// }

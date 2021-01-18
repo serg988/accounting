@@ -1,6 +1,5 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
-import CompanyDetailsTable from '../shared/tables/CompanyDetailsTable'
 import classes from './InvoicePrint.module.css'
 
 class InvoicePrint extends React.PureComponent {

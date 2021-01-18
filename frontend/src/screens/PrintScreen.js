@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Button, Row } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import InvoicePrint from '../invoices/InvoicePrint'
 import AvrPrint from '../invoices/AvrPrint'
 import { useReactToPrint } from 'react-to-print'
@@ -14,15 +14,13 @@ const PrintScreen = ({ data }) => {
     content: () => componentRef.current,
   })
 
-  const dispatch = useDispatch()
   const invoiceDetails = useSelector((state) => state.invoiceDetails)
-  const { loading, error, invoice, current } = invoiceDetails
+  const { current } = invoiceDetails
   const invoiceCreate = useSelector((state) => state.invoiceCreate)
   const { avrDate } = invoiceCreate
   const clientList = useSelector((state) => state.clientList)
   const { clients } = clientList
 
-  console.log('CLIENTS', clients)
   if (clients.length === 0) {
     history.push('/')
     return <>.</>

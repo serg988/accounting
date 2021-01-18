@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import * as yup from 'yup'
 import { Formik, ErrorMessage, FieldArray, Field } from 'formik'
 import ReactTooltip from 'react-tooltip'
 import { Form, Col, Button } from 'react-bootstrap'
 import SuccessModal from '../shared/UIElements/SuccessModal'
 import TextError from '../shared/form/TextError'
-import Message from '../components/Message'
-import Loader from '../components/Loader'
+
 import { updateInvoice } from '../actions/invoiceActions'
 
 const reqdFieldMsg = 'Обязательное поле'
@@ -195,7 +194,7 @@ const EditInvoice = () => {
                   />
 
                   <Button type='submit'>
-                    <i className='far fa-save'></i>  Сохранить
+                    <i className='far fa-save'></i> Сохранить
                   </Button>
                 </Form>
               ) : (

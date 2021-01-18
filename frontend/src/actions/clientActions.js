@@ -16,7 +16,6 @@ export const listClients = () => async (dispatch) => {
     let clients = []
     const { data } = await axios('/api/clients')
     data.map((client) => clients.push({ name: client.name, address: client.address }))
-    console.log(clients);
 
     dispatch({ type: CLIENT_LIST_SUCCESS, payload: clients })
   } catch (error) {
@@ -31,7 +30,6 @@ export const listClients = () => async (dispatch) => {
 }
 
 export const createClient = (client) => async (dispatch, getState) => {
-  console.log('NEW CLIENT: ', client)
   try {
     dispatch({
       type: CLIENT_CREATE_REQUEST,

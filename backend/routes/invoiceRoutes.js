@@ -36,7 +36,6 @@ router.get(
 router.post(
   '/',
   asyncHandler(async (req, res) => {
-    console.log(req.body)
     const {
       number,
       client,
@@ -78,7 +77,6 @@ router.post(
 router.put(
   '/:id',
   asyncHandler(async (req, res) => {
-    console.log(req.body)
     const {
       number,
       client,

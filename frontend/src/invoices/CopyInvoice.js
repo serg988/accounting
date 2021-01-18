@@ -61,7 +61,6 @@ const NewInvoice = () => {
 
     values = { ...values, total, linesNumber, number: nextInvoiceNumber }
 
-    console.log(values)
     setValidData(values)
     dispatch(createInvoice(values))
     history.push('/') //////////////////////////////////////////////

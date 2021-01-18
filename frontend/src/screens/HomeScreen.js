@@ -39,7 +39,6 @@ const HomeScreen = () => {
   const deleteInvoiceHandler = (id) => {
     dispatch(deleteInvoice(id))
     setShowDeleteModal(false)
-    console.log(id)
   }
   return (
     <div className='table-container'>

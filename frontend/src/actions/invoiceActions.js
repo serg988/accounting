@@ -10,7 +10,6 @@ import {
   INVOICE_CREATE_REQUEST,
   INVOICE_CREATE_SUCCESS,
   INVOICE_CREATE_FAIL,
-  INVOICE_MODAL_SHOW,
   INVOICE_MODAL_HIDE,
   SET_CURRENT_INVOICE,
   INVOICE_UPDATE_REQUEST,
@@ -18,7 +17,6 @@ import {
   INVOICE_UPDATE_FAIL,
   INVOICE_DELETE_REQUEST,
   INVOICE_DELETE_SUCCESS,
-  INVOICE_DELETE_FAIL,
   SET_AVR_DATE,
   SET_AVR_DATE_MODAL_ON,
   SET_AVR_DATE_MODAL_OFF,
@@ -36,7 +34,6 @@ export const listInvoices = () => async (dispatch) => {
       prev.number > current.number ? prev : current
     )
     const nextNumber = lastNumber.number + 1
-    console.log(nextNumber)
     dispatch({ type: SET_NEXT_INVOICE_NUMBER, payload: nextNumber })
   } catch (error) {
     dispatch({
@@ -50,7 +47,6 @@ export const listInvoices = () => async (dispatch) => {
 }
 
 export const listInvoiceDetails = (id) => async (dispatch) => {
-  console.log('IDIII', id);
   try {
     dispatch({ type: INVOICE_DETAILS_REQUEST })
 
@@ -69,7 +65,6 @@ export const listInvoiceDetails = (id) => async (dispatch) => {
 }
 
 export const createInvoice = (invoice) => async (dispatch, getState) => {
-  console.log('NEW INVOICE: ', invoice)
   try {
     dispatch({
       type: INVOICE_CREATE_REQUEST,
@@ -114,13 +109,11 @@ export const createInvoice = (invoice) => async (dispatch, getState) => {
 }
 
 export const setCurrentInvoice = (invoice) => (dispatch, getState) => {
-  console.log('CURRENT INVOICE: ', invoice)
 
   dispatch({ type: SET_CURRENT_INVOICE, payload: invoice })
 }
 
 export const updateInvoice = (invoice) => async (dispatch, getState) => {
-  console.log('UPDATE INVOICE', invoice)
   try {
     dispatch({
       type: INVOICE_UPDATE_REQUEST,
@@ -158,7 +151,6 @@ export const updateInvoice = (invoice) => async (dispatch, getState) => {
   }
 }
 export const deleteInvoice = (id) => async (dispatch, getState) => {
-  console.log(id)
   try {
     dispatch({
       type: INVOICE_DELETE_REQUEST,
