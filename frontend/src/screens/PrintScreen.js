@@ -75,7 +75,7 @@ const PrintScreen = ({ data }) => {
           onClick={() => {
             history.goBack()
           }}
-          variant='outline-primary'
+          variant='outline-secondary'
           size='lg'
           block
           style={{ width: '30%', margin: '2rem auto' }}
