@@ -5,7 +5,6 @@ import * as yup from 'yup'
 import { Formik, ErrorMessage, FieldArray, Field } from 'formik'
 import ReactTooltip from 'react-tooltip'
 import { Form, Col, Button } from 'react-bootstrap'
-import SuccessModal from '../shared/UIElements/SuccessModal'
 import TextError from '../shared/form/TextError'
 
 import { updateInvoice } from '../actions/invoiceActions'
@@ -193,8 +192,17 @@ const EditInvoice = () => {
                     )}
                   />
 
-                  <Button type='submit'>
+                  <Button type='submit' variant='outline-primary'>
                     <i className='far fa-save'></i> Сохранить
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      history.goBack()
+                    }}
+                    variant='outline-secondary'
+                    style={{ marginLeft: '2rem' }}
+                  >
+                    <i className='fas fa-arrow-circle-left'></i> Назад
                   </Button>
                 </Form>
               ) : (
@@ -204,11 +212,6 @@ const EditInvoice = () => {
           )
         }}
       </Formik>
-      <SuccessModal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        data={validData}
-      />
     </>
   )
 }

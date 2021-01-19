@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import * as yup from 'yup'
@@ -117,7 +117,7 @@ const NewInvoice = () => {
                   </Form.Group>
                   <Form.Group>
                     <Button
-                      className='btn-secondary'
+                      variant='outline-secondary'
                       style={{ marginTop: '31px' }}
                       onClick={() => dispatch(newClientModalShow())}
                     >
@@ -206,26 +206,28 @@ const NewInvoice = () => {
                               placeholder='Цена'
                             />
                           </Form.Group>
-                          {arrayHelpers.form.values.lines.length > 1 && <Form.Group>
-                            <Button
-                              variant='outline-primary'
-                              type='button'
-                              onClick={() => {
-                                arrayHelpers.remove(index)
-                              }}
-                              data-tip
-                              data-for='minusTip'
-                            >
-                              <i className='fas fa-minus-circle'></i>
-                            </Button>
-                            <ReactTooltip
-                              id='minusTip'
-                              place='top'
-                              effect='solid'
-                            >
-                              Удалить строку
-                            </ReactTooltip>
-                          </Form.Group>}
+                          {arrayHelpers.form.values.lines.length > 1 && (
+                            <Form.Group>
+                              <Button
+                                variant='outline-primary'
+                                type='button'
+                                onClick={() => {
+                                  arrayHelpers.remove(index)
+                                }}
+                                data-tip
+                                data-for='minusTip'
+                              >
+                                <i className='fas fa-minus-circle'></i>
+                              </Button>
+                              <ReactTooltip
+                                id='minusTip'
+                                place='top'
+                                effect='solid'
+                              >
+                                Удалить строку
+                              </ReactTooltip>
+                            </Form.Group>
+                          )}
                         </Form.Row>
                       ))}
                       <Form.Group>
@@ -249,7 +251,9 @@ const NewInvoice = () => {
                   )}
                 />
 
-                <Button type='submit'>Отправить</Button>
+                <Button type='submit' variant='outline-primary'>
+                  Отправить
+                </Button>
               </Form>
             </>
           )

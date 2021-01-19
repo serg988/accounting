@@ -245,8 +245,17 @@ const NewInvoice = () => {
                   )}
                 />
 
-                <Button type='submit'>
+                <Button type='submit' variant='outline-primary'>
                   <i className='far fa-paper-plane'></i> Отправить
+                </Button>
+                <Button
+                  onClick={() => {
+                    history.goBack()
+                  }}
+                  variant='outline-secondary'
+                  style={{ marginLeft: '2rem' }}
+                >
+                  <i className='fas fa-arrow-circle-left'></i> Назад
                 </Button>
               </Form>
             </>

@@ -40,7 +40,12 @@ export const FormNewClient = (props) => {
           />
           <ErrorMessage name='newClient' component={TextError} />
 
-          <Button className='mt-2' type='submit' disabled={errors.newClient}>
+          <Button
+            className='mt-2'
+            variant='outline-primary'
+            type='submit'
+            disabled={errors.newClient}
+          >
             Сохранить
           </Button>
         </form>
