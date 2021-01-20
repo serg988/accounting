@@ -16,13 +16,17 @@ const HomeScreen = () => {
   const invoiceList = useSelector((state) => state.invoiceList)
   const { loading, error, invoices } = invoiceList
 
-  useEffect(() => {
-    dispatch(listInvoices())
-  }, [dispatch])
+  const Login = useSelector((state) => state.Login)
+  const { token } = Login
+
 
   useEffect(() => {
     dispatch(listClients())
   }, [dispatch])
+
+  useEffect(() => {
+    dispatch(listInvoices())
+  }, [dispatch, token])
 
   const history = useHistory()
 

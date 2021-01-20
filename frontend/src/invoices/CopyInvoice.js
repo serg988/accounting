@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import * as yup from 'yup'
 import { Formik, ErrorMessage, FieldArray, Field } from 'formik'
 import ReactTooltip from 'react-tooltip'
@@ -10,10 +10,8 @@ import TextError from '../shared/form/TextError'
 import EditModal from '../shared/UIElements/EditModal'
 import { FormNewClient } from '../shared/form/Form'
 import Message from '../components/Message'
-import Loader from '../components/Loader'
 
 import {
-  createClient,
   listClients,
   newClientModalHide,
   newClientModalShow,
@@ -37,7 +35,7 @@ const NewInvoice = () => {
 
   const dispatch = useDispatch()
   const clientList = useSelector((state) => state.clientList)
-  const { loading, error, clients } = clientList
+  const { clients } = clientList
 
   const clientCreate = useSelector((state) => state.clientCreate)
   const { isNewClientModalShow, err } = clientCreate

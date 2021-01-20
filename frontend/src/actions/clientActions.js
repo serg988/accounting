@@ -10,11 +10,20 @@ import {
   CLIENT_MODAL_HIDE,
 } from '../constants/clientConstants'
 
-export const listClients = () => async (dispatch) => {
+export const listClients = () => async (dispatch, getState) => {
   try {
+     const state = getState()
+     const token = state.Login.token.token
+
+     const config = {
+       headers: {
+         'Content-Type': 'application/json',
+         Authorization: `Bearer ${token}`,
+       },
+     }
     dispatch({ type: CLIENT_LIST_REQUEST })
     let clients = []
-    const { data } = await axios('/api/clients')
+    const { data } = await axios('/api/clients', config)
     data.map((client) => clients.push({ name: client.name, address: client.address }))
 
     dispatch({ type: CLIENT_LIST_SUCCESS, payload: clients })
@@ -35,16 +44,15 @@ export const createClient = (client) => async (dispatch, getState) => {
       type: CLIENT_CREATE_REQUEST,
     })
 
-    // const {
-    //   userLogin: { userInfo },
-    // } = getState()
+     const state = getState()
+     const token = state.Login.token.token
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        // Authorization: `Bearer ${userInfo.token}`,
-      },
-    }
+     const config = {
+       headers: {
+         'Content-Type': 'application/json',
+         Authorization: `Bearer ${token}`,
+       },
+     }
 
     const { data } = await axios.post('/api/clients', client, config)
 

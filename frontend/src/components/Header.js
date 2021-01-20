@@ -1,8 +1,11 @@
 import React from 'react'
+import {useDispatch} from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container } from 'react-bootstrap'
+import {logout} from '../actions/authActions'
 
 const Header = () => {
+  const dispatch = useDispatch()
   return (
     <header>
       <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
@@ -24,7 +27,7 @@ const Header = () => {
               </LinkContainer>
 
               <LinkContainer to='/login'>
-                <Nav.Link>
+                <Nav.Link onClick={() => dispatch(logout())}>
                   <i className='fas fa-sign-out-alt'></i> Выход
                 </Nav.Link>
               </LinkContainer>

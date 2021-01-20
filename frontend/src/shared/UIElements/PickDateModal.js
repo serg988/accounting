@@ -8,8 +8,7 @@ import { Form, Modal } from 'react-bootstrap'
 const PickDateModal = ({ showModal, closeModal, title, body }) => {
   const history = useHistory()
   const dispatch = useDispatch()
-  // const [avrDate, setAvrDate] = useState(new Date())
-
+ 
   const changeHandler = (e) => {
     const date = new Date(e.target.value).toLocaleDateString('ru', {
       year: 'numeric',

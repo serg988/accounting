@@ -20,7 +20,6 @@ const schema = yup.object({
 
 const EditInvoice = () => {
   const [validData, setValidData] = useState({})
-  const [showModal, setShowModal] = useState(false)
   const history = useHistory()
 
   const dispatch = useDispatch()

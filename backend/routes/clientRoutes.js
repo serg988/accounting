@@ -2,12 +2,14 @@ import express from 'express'
 const router = express.Router()
 import asyncHandler from 'express-async-handler'
 import Client from '../models/clientModel.js'
+import { protect } from '../middleware/auth.js'
 
 //@desc: Fetch all clients
 //@route: GET api/clients
 //@access: public
 router.get(
   '/',
+  protect,
   asyncHandler(async (req, res) => {
     const clients = await Client.find({})
     res.json(clients)
@@ -19,6 +21,7 @@ router.get(
 //@access: public
 router.get(
   '/:id',
+  protect,
   asyncHandler(async (req, res) => {
     const invoice = await Invoice.findById(req.params.id)
     if (invoice) {
@@ -35,6 +38,7 @@ router.get(
 // @access  Public
 router.post(
   '/',
+  protect,
   asyncHandler(async (req, res) => {
     const { name, address } = req.body
 
@@ -46,7 +50,8 @@ router.post(
     }
 
     const client = await Client.create({
-      name, address
+      name,
+      address,
     })
 
     if (client) {

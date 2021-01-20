@@ -22,11 +22,21 @@ import {
   SET_AVR_DATE_MODAL_OFF,
 } from '../constants/invoiceConstants'
 
-export const listInvoices = () => async (dispatch) => {
+export const listInvoices = () => async (dispatch, getState) => {
   try {
+    const state = getState()
+    const token = state.Login.token.token
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
     dispatch({ type: INVOICE_LIST_REQUEST })
 
-    const { data } = await axios('/api/invoices')
+    const { data } = await axios('/api/invoices', config)
 
     dispatch({ type: INVOICE_LIST_SUCCESS, payload: data })
 
@@ -46,11 +56,20 @@ export const listInvoices = () => async (dispatch) => {
   }
 }
 
-export const listInvoiceDetails = (id) => async (dispatch) => {
+export const listInvoiceDetails = (id) => async (dispatch, getState) => {
   try {
+    const state = getState()
+    const token = state.Login.token.token
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
     dispatch({ type: INVOICE_DETAILS_REQUEST })
 
-    const { data } = await axios(`/api/invoices/${id}`)
+    const { data } = await axios(`/api/invoices/${id}`, config)
 
     dispatch({ type: INVOICE_DETAILS_SUCCESS, payload: data })
   } catch (error) {
@@ -66,22 +85,20 @@ export const listInvoiceDetails = (id) => async (dispatch) => {
 
 export const createInvoice = (invoice) => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: INVOICE_CREATE_REQUEST,
-    })
-
-    // const {
-    //   userLogin: { userInfo },
-    // } = getState()
+    const state = getState()
+    const token = state.Login.token.token
 
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${token}`,
       },
     }
+    dispatch({
+      type: INVOICE_CREATE_REQUEST,
+    })
 
-    const { data } = await axios.post(
+     const { data } = await axios.post(
       '/api/invoices',
       JSON.stringify(invoice),
       config
@@ -109,7 +126,6 @@ export const createInvoice = (invoice) => async (dispatch, getState) => {
 }
 
 export const setCurrentInvoice = (invoice) => (dispatch, getState) => {
-
   dispatch({ type: SET_CURRENT_INVOICE, payload: invoice })
 }
 
@@ -119,12 +135,15 @@ export const updateInvoice = (invoice) => async (dispatch, getState) => {
       type: INVOICE_UPDATE_REQUEST,
     })
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        // Authorization: `Bearer ${userInfo.token}`,
-      },
-    }
+   const state = getState()
+   const token = state.Login.token.token
+
+   const config = {
+     headers: {
+       'Content-Type': 'application/json',
+       Authorization: `Bearer ${token}`,
+     },
+   }
 
     const { data } = await axios.put(
       `/api/invoices/${invoice._id}`,
@@ -152,22 +171,21 @@ export const updateInvoice = (invoice) => async (dispatch, getState) => {
 }
 export const deleteInvoice = (id) => async (dispatch, getState) => {
   try {
+    const state = getState()
+    const token = state.Login.token.token
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
     dispatch({
       type: INVOICE_DELETE_REQUEST,
       payload: id,
     })
 
-    // const {
-    //   userLogin: { userInfo },
-    // } = getState()
-
-    // const config = {
-    //   headers: {
-    //     Authorization: `Bearer ${userInfo.token}`,
-    //   },
-    // }
-
-    await axios.delete(`/api/invoices/${id}`) //, config
+    await axios.delete(`/api/invoices/${id}`, config)
 
     dispatch({
       type: INVOICE_DELETE_SUCCESS,
@@ -202,6 +220,6 @@ export const setAvrDateModalOff = () => (dispatch) => {
 export const setAvrDate = (date) => (dispatch) => {
   dispatch({
     type: SET_AVR_DATE,
-    payload: date
+    payload: date,
   })
 }

@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import {invoiceCreateReducer, invoiceDetailsReducer, invoiceListReducer} from './reducers/invoiceReducers'
 import { clientCreateReducer, clientListReducer } from './reducers/clientReducer'
+import { LoginReducer } from './reducers/authReducer'
 
 const reducer = combineReducers({
   invoiceList: invoiceListReducer,
@@ -10,6 +11,7 @@ const reducer = combineReducers({
   invoiceCreate: invoiceCreateReducer,
   clientList: clientListReducer,
   clientCreate: clientCreateReducer,
+  Login: LoginReducer,
 })
 
 const initialState = {}
