@@ -36,7 +36,10 @@ export const listInvoices = () => async (dispatch, getState) => {
 
     dispatch({ type: INVOICE_LIST_REQUEST })
 
-    const { data } = await axios('/api/invoices', config)
+    const { data } = await axios(
+      process.env.REACT_APP_BACKEND_URL + '/invoices',
+      config
+    )
 
     dispatch({ type: INVOICE_LIST_SUCCESS, payload: data })
 
@@ -69,7 +72,7 @@ export const listInvoiceDetails = (id) => async (dispatch, getState) => {
     }
     dispatch({ type: INVOICE_DETAILS_REQUEST })
 
-    const { data } = await axios(`/api/invoices/${id}`, config)
+    const { data } = await axios(`${process.env.REACT_APP_BACKEND_URL}/invoices/${id}`, config)
 
     dispatch({ type: INVOICE_DETAILS_SUCCESS, payload: data })
   } catch (error) {
@@ -99,10 +102,10 @@ export const createInvoice = (invoice) => async (dispatch, getState) => {
     })
 
      const { data } = await axios.post(
-      '/api/invoices',
-      JSON.stringify(invoice),
-      config
-    )
+       process.env.REACT_APP_BACKEND_URL + '/invoices',
+       JSON.stringify(invoice),
+       config
+     )
 
     dispatch({
       type: INVOICE_CREATE_SUCCESS,
@@ -146,7 +149,7 @@ export const updateInvoice = (invoice) => async (dispatch, getState) => {
    }
 
     const { data } = await axios.put(
-      `/api/invoices/${invoice._id}`,
+      `${process.env.REACT_APP_BACKEND_URL}/invoices/${invoice._id}`,
       invoice,
       config
     )
@@ -185,7 +188,7 @@ export const deleteInvoice = (id) => async (dispatch, getState) => {
       payload: id,
     })
 
-    await axios.delete(`/api/invoices/${id}`, config)
+    await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/invoices/${id}`, config)
 
     dispatch({
       type: INVOICE_DELETE_SUCCESS,

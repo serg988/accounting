@@ -12,19 +12,24 @@ import {
 
 export const listClients = () => async (dispatch, getState) => {
   try {
-     const state = getState()
-     const token = state.Login.token.token
+    const state = getState()
+    const token = state.Login.token.token
 
-     const config = {
-       headers: {
-         'Content-Type': 'application/json',
-         Authorization: `Bearer ${token}`,
-       },
-     }
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
     dispatch({ type: CLIENT_LIST_REQUEST })
     let clients = []
-    const { data } = await axios('/api/clients', config)
-    data.map((client) => clients.push({ name: client.name, address: client.address }))
+    const { data } = await axios(
+      process.env.REACT_APP_BACKEND_URL + '/clients',
+      config
+    )
+    data.map((client) =>
+      clients.push({ name: client.name, address: client.address })
+    )
 
     dispatch({ type: CLIENT_LIST_SUCCESS, payload: clients })
   } catch (error) {
@@ -44,24 +49,27 @@ export const createClient = (client) => async (dispatch, getState) => {
       type: CLIENT_CREATE_REQUEST,
     })
 
-     const state = getState()
-     const token = state.Login.token.token
+    const state = getState()
+    const token = state.Login.token.token
 
-     const config = {
-       headers: {
-         'Content-Type': 'application/json',
-         Authorization: `Bearer ${token}`,
-       },
-     }
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
 
-    const { data } = await axios.post('/api/clients', client, config)
+    const { data } = await axios.post(
+      process.env.REACT_APP_BACKEND_URL + '/clients',
+      client,
+      config
+    )
 
     dispatch({
       type: CLIENT_CREATE_SUCCESS,
       payload: data,
     })
     dispatch(listClients())
-    
   } catch (error) {
     const message =
       error.response && error.response.data.message
